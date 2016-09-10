@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPink">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <!-- SurfaceView of three color shades-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_marginBottom="60dp">
+
+                <!-- Surface Top -->
+                <SurfaceView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/colorGreen"
+                    android:id="@+id/sv_layName_top"
+                    android:layout_weight="1"/>
+
+                <!-- Surface Middle -->
+                <SurfaceView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/colorGreenDark"
+                    android:id="@+id/sv_layName_middle"
+                    android:layout_weight="1"/>
+            </LinearLayout>
+
+            <!-- Surface Bottom -->
+            <SurfaceView
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_alignParentBottom="true"
+                android:background="@color/colorGreenDarkDark"
+                android:id="@+id/sv_layName_bottom"/>
+
+            <!-- Answer -->
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Click here to write\nevent organizer's \ncontact number."
+                android:layout_above="@+id/sv_layName_bottom"
+                android:layout_marginBottom="100dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:background="@android:color/transparent"
+                android:textSize="23dp"
+                android:textColor="@color/colorWhite"
+                android:paddingBottom="30dp"
+                android:id="@+id/et_exlocation_answer"
+                android:inputType="phone"/>
+
+            <!-- Question -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_alignParentTop="true">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="WRITE DOWN"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="20dp"
+                    android:id="@+id/tv_exLocation_text1"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Organizer's contact number."
+                    android:textColor="@color/colorWhite"
+                    android:textSize="38dp"
+                    android:id="@+id/tv_exLocation_text2"/>
+            </LinearLayout>
+
+            <!-- Next -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
+                android:text="SAVE"
+                android:textSize="20dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:gravity="center"
+                android:textColor="@color/colorWhite"
+                android:id="@+id/tv_exLocation_save"
+                android:paddingRight="20dp"
+                android:paddingLeft="20dp"/>
+
+        </RelativeLayout>
+    </ScrollView>
+</RelativeLayout>

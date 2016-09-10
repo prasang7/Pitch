@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPink">
+
+    <android.support.v7.widget.CardView
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="25dp"
+        app:cardCornerRadius="3dp"
+        android:layout_below="@+id/ll_dateTime_buttons"
+        android:id="@+id/cv_"
+        android:layout_marginTop="20dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginRight="20dp">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Select the event type: "
+                android:textSize="22dp"
+                android:textColor="@color/colorDarkGray"
+                android:id="@+id/tv_exTyprOfEvent_heading"/>
+
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <RadioButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Conference"
+                    android:layout_marginTop="20dp"
+                    android:textSize="17dp"
+                    android:id="@+id/cb_exType_conference"
+                    android:onClick="onRadioButtonClicked"/>
+                <RadioButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Seminar"
+                    android:layout_marginTop="10dp"
+                    android:textSize="17dp"
+                    android:id="@+id/cb_exType_seminar"
+                    android:onClick="onRadioButtonClicked"/>
+                <RadioButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Meetings"
+                    android:layout_marginTop="10dp"
+                    android:textSize="17dp"
+                    android:id="@+id/cb_exType_meeting"
+                    android:onClick="onRadioButtonClicked"/>
+                <RadioButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Theme Party"
+                    android:layout_marginTop="10dp"
+                    android:textSize="17dp"
+                    android:id="@+id/cb_exType_themeParty"
+                    android:onClick="onRadioButtonClicked"/>
+                <RadioButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Product Launch"
+                    android:layout_marginTop="10dp"
+                    android:textSize="17dp"
+                    android:onClick="onRadioButtonClicked"
+                    android:id="@+id/cb_exType_productLaunch"/>
+                <RadioButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Birthday Party"
+                    android:layout_marginTop="10dp"
+                    android:textSize="17dp"
+                    android:onClick="onRadioButtonClicked"
+                    android:id="@+id/cb_exType_birthday"/>
+                <RadioButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Wedding"
+                    android:onClick="onRadioButtonClicked"
+                    android:layout_marginTop="10dp"
+                    android:textSize="17dp"
+                    android:id="@+id/cb_exType_wedding"/>
+                <RadioButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Wedding Anniversary"
+                    android:layout_marginTop="10dp"
+                    android:textSize="17dp"
+                    android:onClick="onRadioButtonClicked"
+                    android:id="@+id/cb_exType_weddingAnniversary"/>
+                <RadioButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Other"
+                    android:onClick="onRadioButtonClicked"
+                    android:layout_marginTop="10dp"
+                    android:textSize="17dp"
+                    android:id="@+id/cb_exType_other"/>
+
+            </RadioGroup>
+
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:text="SAVE"
+                android:background="@drawable/custombutton_pink"
+                android:textColor="@color/colorWhite"
+                android:layout_marginBottom="10dp"
+                android:id="@+id/bt_extypeOfEvent_save"/>
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+</RelativeLayout>

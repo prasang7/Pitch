@@ -1,0 +1,352 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBlue">
+    <!-- Top Panel -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorDarkGray">
+        <!-- Event Name -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="30dp"
+            android:text="Event Name"
+            android:gravity="center"
+            android:textColor="@color/colorWhite"
+            android:id="@+id/tv_preview_eventName"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"/>
+    </RelativeLayout>
+
+    <!-- Parent ScrollView-->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <!-- Middle Panel -->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorDarkGray">
+                <!-- Event Type -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="17dp"
+                    android:text="Event Type"
+                    android:gravity="center"
+                    android:textColor="@color/colorWhite"
+                    android:id="@+id/tv_preview_eventType" />
+                <!-- Date- Time -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_preview_eventType"
+                    android:text="Event starts at 9:00 PM\non 23/4/25"
+                    android:gravity="center"
+                    android:textColor="@color/colorWhite"
+                    android:layout_marginTop="60dp"
+                    android:textSize="22dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginBottom="10dp"
+                    android:id="@+id/tv_preview_dateTime"/>
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorBlack">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="www.cambuzz.co.in"
+                    android:textColor="@color/colorWhite"
+                    android:layout_centerVertical="true"
+                    android:id="@+id/tv_preview_website"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"/>
+            </RelativeLayout>
+
+            <!-- Location -->
+            <android.support.v7.widget.CardView
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:elevation="25dp"
+                app:cardCornerRadius="3dp"
+                android:id="@+id/cv_preview_location"
+                android:layout_marginTop="10dp">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/locationpin"
+                        android:layout_marginTop="25dp"
+                        android:layout_marginLeft="20dp"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Venue: AM II 79, SUKHLIYA, INDORE, MP."
+                        android:textSize="17dp"
+                        android:textColor="@color/colorDarkGray"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginLeft="50dp"
+                        android:layout_marginRight="20dp"
+                        android:id="@+id/tv_preview_location"/>
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:text="Locate on Map"
+                        android:layout_below="@+id/tv_preview_location"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:textColor="@color/colorWhite"
+                        android:background="@drawable/custombutton_green"
+                        android:id="@+id/bt_preview_locateOnMap"/>
+                </RelativeLayout>
+            </android.support.v7.widget.CardView>
+
+            <!-- Descriptions Card -->
+            <android.support.v7.widget.CardView
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:elevation="25dp"
+                app:cardCornerRadius="3dp"
+                android:id="@+id/cv_preview_description"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <!-- "DESCRIPTION" heading-->
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Description"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:textSize="20dp"
+                        android:textColor="@color/colorDarkGray"
+                        android:id="@+id/tv_preview_descriptionHeadingText"/>
+                    <!-- Description-->
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="This isa  asd as da sd  sad asd "
+                        android:textSize="17dp"
+                        android:textColor="@color/colorDarkGray"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginTop="10dp"
+                        android:id="@+id/tv_preview_description"/>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/colorGray"
+                        android:layout_marginTop="10dp"/>
+
+                    <!-- open-closed status description-->
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="This is an OPEN TO ALL event."
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:textColor="@color/colorDarkGray"
+                        android:id="@+id/tv_preview_openCloseStatus"
+                        android:gravity="center"/>
+
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+
+            <!-- TargetAudience, Duration Card -->
+            <android.support.v7.widget.CardView
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:elevation="25dp"
+                app:cardCornerRadius="3dp"
+                android:id="@+id/cv_preview_targerAudienceAndDuration"
+                android:layout_marginBottom="10dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Target Audience:"
+                        android:gravity="center"
+                        android:textSize="20dp"
+                        android:layout_marginTop="10dp"
+                        android:textColor="@color/colorDarkGray"
+                        android:id="@+id/tv_preview_headingTargetAudience"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Students"
+                        android:gravity="center"
+                        android:textSize="17dp"
+                        android:layout_marginTop="5dp"
+                        android:textColor="@color/colorDarkGray"
+                        android:id="@+id/tv_preview_targetAudience"/>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/colorGray"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Event's Time Duration:"
+                        android:gravity="center"
+                        android:textSize="20dp"
+                        android:textColor="@color/colorDarkGray"
+                        android:id="@+id/tv_preview_headingEventDuration"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="2 Hrs"
+                        android:gravity="center"
+                        android:textSize="17dp"
+                        android:layout_marginTop="5dp"
+                        android:textColor="@color/colorDarkGray"
+                        android:layout_marginBottom="10dp"
+                        android:id="@+id/tv_preview_eventDuration"/>
+                </LinearLayout>
+             </android.support.v7.widget.CardView>
+
+            <!-- Organizer's Details Card -->
+            <android.support.v7.widget.CardView
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:elevation="25dp"
+                app:cardCornerRadius="3dp"
+                android:id="@+id/cv_preview_organizers"
+                android:layout_marginBottom="10dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="20dp"
+                        android:text="Organizers:"
+                        android:textColor="@color/colorDarkGray"
+                        android:gravity="center"
+                        android:layout_marginTop="10dp"
+                        android:id="@+id/tv_preview_headingOrganizers"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="17dp"
+                        android:text="Xyz organising committee"
+                        android:textColor="@color/colorDarkGray"
+                        android:gravity="center"
+                        android:layout_marginTop="5dp"
+                        android:id="@+id/tv_preview_organizers"/>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/colorGray"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="20dp"
+                        android:text="Contact Details"
+                        android:textColor="@color/colorDarkGray"
+                        android:gravity="center"
+                        android:id="@+id/tv_preview_headingContactDetails"/>
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="prasang.sharma7@gmail.com"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:id="@+id/bt_preview_email"
+                        android:background="@drawable/custombutton_green"
+                        android:layout_marginTop="10dp"
+                        android:textAllCaps="false" />
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="+91 8681070970"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:id="@+id/bt_preview_phone"
+                        android:background="@drawable/custombutton_green"
+                        android:textAllCaps="false"/>
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+
+            <!-- Sponsors -->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorDarkGray">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorWhite"
+                    android:text="Sponsors for our event are:\nAmazon\nMTV\nRandom Shit"
+                    android:gravity="center"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:textSize="20dp"
+                    android:id="@+id/tv_preview_sponsors"/>
+            </RelativeLayout>
+
+            <!-- Pitch -->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorBlack">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="This app was created by Pitch."
+                    android:textColor="@color/colorWhite"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="10dp"/>
+            </RelativeLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>
