@@ -81,5 +81,4 @@ public class BasicDataActivity extends Activity{
     void saveUsername() {
         SharedPreferenceMethods.setString(BasicDataActivity.this,SharedPreferenceMethods.AUTHOR_NAME,et_username.getText().toString());
     }
-
 }
