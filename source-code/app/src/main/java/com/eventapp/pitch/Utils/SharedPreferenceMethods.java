@@ -8,6 +8,7 @@ public class SharedPreferenceMethods
     public static Context appContext;
     private static String PREFERENCE="pitch_eventapp_SharedPreference";
     public static final String SHARED_PREFERENCE_NAME="pitch_eventApp_SharedPreference";
+    public static String UTILITY_PREFS_NAME="utilityPrefs";
 
     // Variables
     public static final String EVENT_NAME = "app_name";
@@ -25,6 +26,8 @@ public class SharedPreferenceMethods
     public static final String ORG_EMAIL = "email";
     public static final String SPONSOR_DETAIL= "sponsor_detail";
     public static final String COLOR = "color";
+
+    public static final String isAssetsCopied = "assetsCopied";
 
     public static SharedPreferences.Editor getEditor(Context context)
     {

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+<RelativeLayout
+    android:layout_height="match_parent"
+    android:layout_width="match_parent">
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitXY"
+        android:id="@+id/template_card_screenshot"/>
+    <ImageButton
+        android:background="@drawable/custombutton_white"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:id="@+id/template_card_view"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="10dp"
+        android:src="@drawable/ic_view"
+        android:scaleType="fitXY"/>
+    <ImageButton
+        android:background="@drawable/custombutton_white"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:id="@+id/template_card_use"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="10dp"
+        android:src="@drawable/ic_use"
+        android:scaleType="fitXY"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/selected_template"
+        android:visibility="invisible"
+        android:id="@+id/selected_template"/>
+
+</RelativeLayout>
+    </android.support.v7.widget.CardView>
