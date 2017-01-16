@@ -3,16 +3,22 @@ package com.eventapp.pitch.Activities;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Typeface;
 import android.media.Image;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.view.ContextThemeWrapper;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.PopupMenu;
+import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -26,6 +32,10 @@ import android.widget.Toast;
 
 import com.eventapp.pitch.R;
 import com.eventapp.pitch.Utils.SharedPreferenceMethods;
+import com.eventapp.pitch.Utils.pitch;
+import com.eventapp.pitch.project;
+import com.eventapp.pitch.template;
+import com.google.gson.Gson;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -43,13 +53,16 @@ public class InputFromUser extends Activity{
     CardView cv_locationOfEvent, cv_description, cv_typeOfEvent, cv_orgContact, cv_orgEmail,
             cv_targetAudience, cv_eventDuration, cv_website, cv_sponsors;
     TextView tv_eventName, tv_locationOfEvent, tv_briefDescription, tv_typeOfEvent, tv_organizerContact,
-            tv_organizerEmail, tv_questionOpenClosed,
+            tv_organizerEmail, tv_questionOpenClosed,tv_export_status,
             tv_targetAudience, tv_eventDuration, tv_sponsors, tv_website, tv_selectColor, tv_orgName;
     ImageView gt_location, gt_description, gt_typeOfEvent, gt_openClosedStatus, gt_targetAudience, gt_eventDuration,
                 gt_website, gt_orgContact, gt_orgEmail, gt_sponsor;
     RelativeLayout rl_color_blue, rl_color_purple, rl_color_red, rl_color_green;
     Button bt_reset;
     RadioButton openClosed_yes, openClosed_no;
+
+    project currentProject;
+    RelativeLayout loadingView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -82,9 +95,7 @@ public class InputFromUser extends Activity{
         iv_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(InputFromUser.this, "Please wait while we are saving data.", Toast.LENGTH_LONG).show();
-                saveData();
-                Toast.makeText(InputFromUser.this, "Please wait while we are saving data.", Toast.LENGTH_LONG).show();
+                new exportDataAsync().execute();
             }
         });
 
@@ -255,8 +266,70 @@ public class InputFromUser extends Activity{
         overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
     }
 
-    void saveData() {
 
+    template saveData() {
+        Context context = getApplicationContext();
+        template information = currentProject.getInformation();
+        information.setAddress(SharedPreferenceMethods.getString(context, SharedPreferenceMethods.LOCATION));
+        information.setDuration(SharedPreferenceMethods.getString(context, SharedPreferenceMethods.EVENT_DURATION));
+        information.setDescription(SharedPreferenceMethods.getString(context, SharedPreferenceMethods.EVENT_DESCRIPTION));
+        information.setOrgContact(SharedPreferenceMethods.getString(context, SharedPreferenceMethods.ORG_CONTACT));
+        information.setSponsor(SharedPreferenceMethods.getString(context, SharedPreferenceMethods.SPONSOR_DETAIL));
+        information.setOrgEmail(SharedPreferenceMethods.getString(context, SharedPreferenceMethods.ORG_EMAIL));
+        information.setTargetAudience(SharedPreferenceMethods.getString(context, SharedPreferenceMethods.TARGET_AUDIENCE));
+        information.setEventType(SharedPreferenceMethods.getString(context, SharedPreferenceMethods.TYPE_OF_EVENT));
+        information.setWebsiteURL(SharedPreferenceMethods.getString(context, SharedPreferenceMethods.WEBSITE));
+        information.setOpenClosed(SharedPreferenceMethods.getString(context, SharedPreferenceMethods.OPEN_CLOSED_STATUS));
+        pitch.recents.get(projectIndex).saveData(information);
+        SharedPreferenceMethods.saveRecentsAsync(context);
+        return information;
+    }
+
+
+    class exportDataAsync extends AsyncTask<Void,Void,Void>{
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            loadingView.setVisibility(View.VISIBLE);
+            fab_preview.setVisibility(View.GONE);
+            tv_export_status.setText("Exporting...");
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            loadingView.setVisibility(View.GONE);
+            fab_preview.setVisibility(View.VISIBLE);
+            tv_export_status.setText("Exported to output folder");
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            pitch.extractToAccumulator();
+            /*(new Runnable(){
+                @Override
+                public void run() {
+                    tv_export_status.setText("Extracted to accumulator");
+                }
+            }).run();*/
+            template information=saveData();
+
+            pitch.manipulate(information);
+            /*(new Runnable(){
+                @Override
+                public void run() {
+                    tv_export_status.setText("Manipulation Complete");
+                }
+            }).run();*/
+            pitch.zipAndSign();
+            /*(new Runnable(){
+                @Override
+                public void run() {
+                    tv_export_status.setText("Zipped And Signed");
+                }
+            }).run();*/
+            return null;
+        }
     }
 
     void init() {
@@ -318,6 +391,9 @@ public class InputFromUser extends Activity{
 
         bt_reset = (Button)findViewById(R.id.bt_input_reset);
 
+        loadingView =(RelativeLayout)findViewById(R.id.loading_view);
+        tv_export_status= (TextView)findViewById(R.id.tv_export_status);
+
         Typeface MontReg = Typeface.createFromAsset(getApplication().getAssets(), "Montserrat-Regular.otf");
         Typeface MontBold = Typeface.createFromAsset(getApplication().getAssets(), "Montserrat-Bold.otf");
         //Typeface MontHair = Typeface.createFromAsset(getApplication().getAssets(), "Montserrat-Hairline.otf");
@@ -339,8 +415,10 @@ public class InputFromUser extends Activity{
         bt_reset.setTypeface(MontBold);
         openClosed_yes.setTypeface(MontReg);
         openClosed_no.setTypeface(MontReg);
-    }
 
+        currentProject = pitch.recents.get(pitch.currentProjectIndex);
+    }
+    int projectIndex;
     void setBasicData() {
         tv_eventName.setText(SharedPreferenceMethods.getString(this, SharedPreferenceMethods.EVENT_NAME));
         tv_orgName.setText("- " + SharedPreferenceMethods.getString(this, SharedPreferenceMethods.AUTHOR_NAME));

@@ -3,6 +3,11 @@ package com.eventapp.pitch.Utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.eventapp.pitch.project;
+import com.google.gson.Gson;
+
+import java.util.List;
+
 public class SharedPreferenceMethods
 {
     public static Context appContext;
@@ -26,8 +31,9 @@ public class SharedPreferenceMethods
     public static final String ORG_EMAIL = "email";
     public static final String SPONSOR_DETAIL= "sponsor_detail";
     public static final String COLOR = "color";
-
+    public static final String RECENTS ="recents";
     public static final String isAssetsCopied = "assetsCopied";
+
 
     public static SharedPreferences.Editor getEditor(Context context)
     {
@@ -76,6 +82,10 @@ public class SharedPreferenceMethods
     public static Double getDoubleSharedPreferences(Context context, String name) {
         SharedPreferences settings = context.getSharedPreferences(PREFERENCE, 0);
         return (double)settings.getFloat (name, 0.0f);
+    }
+
+    public static void saveRecentsAsync(Context context){
+        setString(context,RECENTS,(new Gson()).toJson(pitch.recents));
     }
 
 }

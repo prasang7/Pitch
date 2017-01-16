@@ -1,5 +1,7 @@
 package com.eventapp.pitch;
 
+import com.google.gson.Gson;
+
 /**
  * Created by Sid on 1/15/17.
  */
@@ -143,5 +145,9 @@ public class template {
 
     public void setDate(String date){
         this.date=date;
+    }
+
+    public String toJson(){
+        return (new Gson()).toJson(this);
     }
 }

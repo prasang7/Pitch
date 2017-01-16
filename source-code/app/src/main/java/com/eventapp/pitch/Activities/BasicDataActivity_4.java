@@ -53,7 +53,7 @@ public class BasicDataActivity_4 extends Activity{
                 }
                 else {
                     saveDateTimeData();
-                    saveProject();
+                    pitch.currentProjectIndex=saveProject();
                     Intent i = new Intent(BasicDataActivity_4.this, InputFromUser.class);
                     startActivity(i);
                     overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
@@ -166,7 +166,7 @@ public class BasicDataActivity_4 extends Activity{
         bt_datePick.setText(sdf.format(myCalendar.getTime()));
     }
 
-    void saveProject(){
+    int saveProject(){
         Context context = getApplicationContext();
         String name = SharedPreferenceMethods.getString(context,SharedPreferenceMethods.EVENT_NAME);
         Calendar calendar = Calendar.getInstance();
@@ -181,6 +181,7 @@ public class BasicDataActivity_4 extends Activity{
         information.setDate(SharedPreferenceMethods.getString(context,SharedPreferenceMethods.DATE));
         newProject.saveData(information);
         pitch.recents.add(newProject);
-        SharedPreferenceMethods.setString(context,"recents",(new Gson()).toJson(pitch.recents));
+        SharedPreferenceMethods.saveRecentsAsync(context);
+        return pitch.recents.size()-1;
     }
 }
