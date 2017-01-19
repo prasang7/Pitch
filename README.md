@@ -1,5 +1,5 @@
 # Pitch Android App
-This repository contains the source code of Pitch Android App.
+This repository contains the source code of Pitch Android App. It's a mobile application built for event managers, and it helps them in developing mobile app for their event. The pitch Android app acts as a parent app that can produce child apps without any coding. These child apps act as the dedicated app for their (manager's) events.
 
 ## Development Setup
 1. Go to the project repo and click the `Fork` button
