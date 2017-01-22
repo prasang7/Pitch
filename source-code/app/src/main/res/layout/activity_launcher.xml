@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_launcher"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorWhite"
+    tools:context="com.eventapp.pitch.Activities.Launcher">
+    <SurfaceView
+        android:background="@color/belize"
+        android:layout_height="200dp"
+        android:layout_width="match_parent"
+        android:id="@+id/sv_launcher">
+        </SurfaceView>
+    <TextView
+        android:layout_below="@id/sv_launcher"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:text="   Recents"
+        android:textColor="@color/belize"
+        android:textSize="23dp"
+        android:layout_marginTop="8dp"
+        android:id="@+id/tv_recents"/>
+    <ScrollView
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_below="@id/tv_recents"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="10dp"
+        android:elevation="25dp">
+        <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:id="@+id/sv_recents"
+            android:orientation="vertical"
+            android:showDividers="middle|end|beginning"
+            android:divider="@drawable/divider" />
+        </ScrollView>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_alignParentTop="true">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginBottom="8dp"
+                android:layout_marginRight="20dp"
+                android:id="@+id/newProject">
+                <ImageView
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:src="@drawable/ic_launcher_new"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="New"
+                    android:textSize="23sp"
+                    android:textColor="@color/custom_grey"
+                    style="@android:style/Widget.DeviceDefault.TextView" />
+                </LinearLayout>
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:text="@string/app_name"
+            android:textSize="100sp"
+            android:textColor="@android:color/white"/>
+    </RelativeLayout>
+
+</RelativeLayout>

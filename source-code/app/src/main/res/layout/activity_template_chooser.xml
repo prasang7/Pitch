@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_template_chooser"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.eventapp.pitch.Activities.templateChooser">
+    <SurfaceView
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="@color/colorOrange"
+        android:id="@+id/sv_chooser_top"/>
+    <TextView
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:text="Choose a template"
+        android:textColor="@color/colorWhite"
+        android:textSize="70sp"/>
+    <SurfaceView
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorRedDarkDark"
+        android:id="@+id/sv_chooser_bottom"/>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorRedDark"
+        android:layout_below="@id/sv_chooser_top"
+        android:layout_above="@id/sv_chooser_bottom">
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="2dp"
+            android:paddingRight="2dp">
+            <LinearLayout
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:id="@+id/templateGridLeft"
+                android:orientation="vertical"
+                android:layout_marginTop="2dp"
+                android:layout_alignParentLeft="true"/>
+            <LinearLayout
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:id="@+id/templateGridRight"
+                android:orientation="vertical"
+                android:layout_marginTop="2dp"
+                android:layout_alignParentRight="true"/>
+        </RelativeLayout>
+        </ScrollView>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:text="NEXT"
+        android:textSize="20dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:gravity="center"
+        android:textColor="@color/colorWhite"
+        android:id="@+id/tv_layName_next"
+        android:paddingRight="20dp"
+        android:paddingLeft="20dp"/>
+    <RelativeLayout
+        android:id="@+id/view_template"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:visibility="visible">
+    </RelativeLayout>
+
+
+</RelativeLayout>

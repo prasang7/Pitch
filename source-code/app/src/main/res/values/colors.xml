@@ -34,4 +34,14 @@
     <color name="colorGreenDark">#01AA47</color>
     <color name="colorGreenDarkDark">#017D35</color>
 
+    <color name="teal">#00aba9</color>
+    <color name="custom_grey">#dddddd</color>
+
+    <color name="belize">#2980b9</color>
+    <color name="dark_belize">#1e5c85</color>
+
+    <color name="colorOrange">#ff7260</color>
+    <color name="colorOrangeDark">#e96756</color>
+    <color name="transprent_colorRed">#7ee53935</color>
+
 </resources>

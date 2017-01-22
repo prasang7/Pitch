@@ -12,13 +12,16 @@ import android.os.Vibrator;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.eventapp.pitch.R;
 import com.eventapp.pitch.Utils.SharedPreferenceMethods;
+import com.eventapp.pitch.Utils.pitch;
+import com.eventapp.pitch.project;
+import com.eventapp.pitch.template;
+import com.google.gson.Gson;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -50,6 +53,7 @@ public class BasicDataActivity_4 extends Activity{
                 }
                 else {
                     saveDateTimeData();
+                    pitch.currentProjectIndex=saveProject();
                     Intent i = new Intent(BasicDataActivity_4.this, InputFromUser.class);
                     startActivity(i);
                     overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
@@ -160,5 +164,24 @@ public class BasicDataActivity_4 extends Activity{
         String myFormat = "dd/MM/yy"; //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
         bt_datePick.setText(sdf.format(myCalendar.getTime()));
+    }
+
+    int saveProject(){
+        Context context = getApplicationContext();
+        String name = SharedPreferenceMethods.getString(context,SharedPreferenceMethods.EVENT_NAME);
+        Calendar calendar = Calendar.getInstance();
+        String dateCreated = calendar.get(Calendar.DAY_OF_MONTH)+"/"+calendar.get(Calendar.MONTH)+1+" "+calendar.get(Calendar.YEAR);
+        int templateId = pitch.currentTemplateIndex;
+        project newProject = new project(name,templateId,dateCreated);
+        template information = new template();
+        information.setEventName(name);
+        information.setOrganizersName(SharedPreferenceMethods.getString(context,SharedPreferenceMethods.AUTHOR_NAME));
+        information.setDescription(SharedPreferenceMethods.getString(context,SharedPreferenceMethods.EVENT_DESCRIPTION));
+        information.setTime(SharedPreferenceMethods.getString(context,SharedPreferenceMethods.TIME));
+        information.setDate(SharedPreferenceMethods.getString(context,SharedPreferenceMethods.DATE));
+        newProject.saveData(information);
+        pitch.recents.add(newProject);
+        SharedPreferenceMethods.saveRecentsAsync(context);
+        return pitch.recents.size()-1;
     }
 }
