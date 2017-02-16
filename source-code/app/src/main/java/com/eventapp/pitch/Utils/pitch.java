@@ -72,7 +72,7 @@ public class pitch {
     public static String MANIFEST_FILE_PATH;
 
     public static void copyAssetsAsync(final Context context) {
-        (new Runnable(){
+        (new Thread(){
             @Override
             public void run() {
                 AssetManager assetManager = context.getAssets();
@@ -80,7 +80,7 @@ public class pitch {
                     String assetsDir = "templates/"+filename;
                     InputStream in = null;
                     OutputStream out = null;
-                    File newFile = null;
+                    File newFile;
                     try {
                         in = assetManager.open(assetsDir);
                         File newFileDir = new File(TEMPLATE_DIR);
@@ -118,7 +118,7 @@ public class pitch {
                     }
                 }
             }
-        }).run();
+        }).start();
     }
 
     public static void extractToAccumulator(){
@@ -164,7 +164,7 @@ public class pitch {
 
     }*/
 
-    public static void zipAndSign(){
+    public static String zipAndSign(){
         File output= new File(PACKAGE_DIR+"output/");
         output.mkdirs();
         String accumulator = PACKAGE_DIR+"accumulator/";
@@ -182,11 +182,14 @@ public class pitch {
 
             appSigner zipSigner= new appSigner();
             zipSigner.setKeymode(ZipSigner.MODE_AUTO_TESTKEY);
-            zipSigner.signZip(output.getAbsolutePath()+"/edited_"+templateApks[currentTemplateIndex],output.getAbsolutePath()+"/signedApk_"+templateApks[currentTemplateIndex]);
+            String signedApkPath=output.getAbsolutePath()+"/signedApk_"+templateApks[currentTemplateIndex];
+            zipSigner.signZip(output.getAbsolutePath()+"/edited_"+templateApks[currentTemplateIndex],signedApkPath);
+            return signedApkPath;
         }
         catch (Exception e){
             Log.e("Compression failed",e.toString());
         }
+        return null;
     }
 
     public static void readManifest(){
