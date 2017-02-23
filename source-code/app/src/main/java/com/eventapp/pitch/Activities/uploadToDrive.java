@@ -54,31 +54,7 @@ public class uploadToDrive extends AppCompatActivity implements GoogleApiClient.
 
         // ...
     }
-    void downloadFile(){
-            /*DriveFile file = new DriveFile();
-            file.open(mGoogleApiClient, DriveFile.MODE_READ_ONLY, null)
-                    .setResultCallback(new ResultCallback<DriveApi.DriveContentsResult>() {
-                        @Override
-                        public void onResult(@NonNull DriveApi.DriveContentsResult driveContentsResult) {
-                            if (!driveContentsResult.getStatus().isSuccess()) {
-                                // display an error saying file can't be opened
-                                return;
-                            }
-                            // DriveContents object contains pointers
-                            // to the actual byte stream
-                            DriveContents contents = driveContentsResult.getDriveContents();
-                            BufferedReader reader = new BufferedReader(new InputStreamReader(contents.getInputStream()));
-                            StringBuilder builder = new StringBuilder();
-                            String line;
-                            while ((line = reader.readLine()) != null) {
-                                builder.append(line);
-                            }
-                            String contentsAsString = builder.toString();
-                        }
-                    });*/
-    }
 
-    private static final String TAG = "CreateFileActivity";
     final private ResultCallback<DriveApi.DriveContentsResult> driveContentsCallback = new
             ResultCallback<DriveApi.DriveContentsResult>() {
                 @Override
@@ -89,7 +65,7 @@ public class uploadToDrive extends AppCompatActivity implements GoogleApiClient.
                     }
                     final DriveContents driveContents = result.getDriveContents();
 
-                    // Perform I/O off the UI thread.
+                    // Perform upload off the UI thread.
                     new Thread() {
                         @Override
                         public void run() {

@@ -27,6 +27,9 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
+import static com.eventapp.pitch.Utils.pitch.MANIFEST_FILE_PATH;
+import static com.eventapp.pitch.Utils.pitch.PACKAGE_DIR;
+
 /**
  * Created by prasang on 14/6/16.
  */
@@ -179,6 +182,10 @@ public class BasicDataActivity_4 extends Activity{
         information.setDescription(SharedPreferenceMethods.getString(context,SharedPreferenceMethods.EVENT_DESCRIPTION));
         information.setTime(SharedPreferenceMethods.getString(context,SharedPreferenceMethods.TIME));
         information.setDate(SharedPreferenceMethods.getString(context,SharedPreferenceMethods.DATE));
+        pitch.ACCUMULATOR_PATH=pitch.PACKAGE_DIR+name+"/accmulator/";
+        pitch.CONFIG_FILE_PATH=pitch.ACCUMULATOR_PATH+"/assets/config.json";
+        pitch.OUTPUT_PATH=pitch.PACKAGE_DIR+name+"/output";
+        MANIFEST_FILE_PATH = pitch.ACCUMULATOR_PATH + "AndroidManifest.xml";
         newProject.saveData(information);
         pitch.recents.add(newProject);
         SharedPreferenceMethods.saveRecentsAsync(context);
