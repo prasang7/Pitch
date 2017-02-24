@@ -47,8 +47,6 @@ public class Launcher extends AppCompatActivity {
         });
         PACKAGE_DIR = Environment.getExternalStorageDirectory()+"/Android/data/"+getApplicationContext().getPackageName()+"/";
         TEMPLATE_DIR = PACKAGE_DIR + "templates/";
-        CONFIG_FILE_PATH= PACKAGE_DIR + "accumulator/assets/config.json";
-        MANIFEST_FILE_PATH = PACKAGE_DIR + "accumulator/AndroidManifest.xml";
     }
 
     void copyAssets(){

@@ -3,8 +3,10 @@
     package="com.eventapp.pitch">
 
     <uses-permission android:name="android.permission.VIBRATE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
 
     <application
         android:allowBackup="true"
@@ -166,8 +168,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activities.templateChooser"
-            android:theme="@style/Theme.Design.NoActionBar"></activity>
+        <activity
+            android:name=".Activities.templateChooser"
+            android:theme="@style/Theme.Design.NoActionBar" />
+        <activity android:name=".Activities.uploadToDrive"></activity>
     </application>
 
 </manifest>

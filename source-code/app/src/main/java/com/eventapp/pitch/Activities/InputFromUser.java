@@ -287,6 +287,7 @@ public class InputFromUser extends Activity{
 
 
     class exportDataAsync extends AsyncTask<Void,Void,Void>{
+        String outputPath="";
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -301,6 +302,9 @@ public class InputFromUser extends Activity{
             loadingView.setVisibility(View.GONE);
             fab_preview.setVisibility(View.VISIBLE);
             tv_export_status.setText("Exported to output folder");
+            Intent toUploadToDrive = new Intent(InputFromUser.this,uploadToDrive.class);
+            toUploadToDrive.putExtra("outPath",outputPath);
+            startActivity(toUploadToDrive);
         }
 
         @Override
@@ -321,7 +325,7 @@ public class InputFromUser extends Activity{
                     tv_export_status.setText("Manipulation Complete");
                 }
             }).run();*/
-            pitch.zipAndSign();
+            outputPath=pitch.zipAndSign();
             /*(new Runnable(){
                 @Override
                 public void run() {

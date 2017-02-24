@@ -71,8 +71,12 @@ public class pitch {
 
     public static String MANIFEST_FILE_PATH;
 
+    public static String ACCUMULATOR_PATH;
+
+    public  static String OUTPUT_PATH;
+
     public static void copyAssetsAsync(final Context context) {
-        (new Runnable(){
+        (new Thread(){
             @Override
             public void run() {
                 AssetManager assetManager = context.getAssets();
@@ -80,7 +84,7 @@ public class pitch {
                     String assetsDir = "templates/"+filename;
                     InputStream in = null;
                     OutputStream out = null;
-                    File newFile = null;
+                    File newFile;
                     try {
                         in = assetManager.open(assetsDir);
                         File newFileDir = new File(TEMPLATE_DIR);
@@ -118,15 +122,15 @@ public class pitch {
                     }
                 }
             }
-        }).run();
+        }).start();
     }
 
     public static void extractToAccumulator(){
-        File accumulator = new File(PACKAGE_DIR+"/accumulator/");
+        File accumulator = new File(ACCUMULATOR_PATH);
         accumulator.mkdirs();
         try{
             ZipFile extractor = new ZipFile(TEMPLATE_DIR+templateApks[currentTemplateIndex]);
-            extractor.extractAll(accumulator.getAbsolutePath()+"/");
+            extractor.extractAll(accumulator.getAbsolutePath());
         }
         catch (ZipException e){
             e.printStackTrace();
@@ -135,6 +139,7 @@ public class pitch {
     }
 
     public static void manipulate(template information){
+        readManifest();
         try{
             FileWriter fout= new FileWriter(CONFIG_FILE_PATH);
             BufferedWriter out = new BufferedWriter(fout);
@@ -164,29 +169,31 @@ public class pitch {
 
     }*/
 
-    public static void zipAndSign(){
-        File output= new File(PACKAGE_DIR+"output/");
+    public static String zipAndSign(){
+        File output= new File(OUTPUT_PATH);
         output.mkdirs();
-        String accumulator = PACKAGE_DIR+"accumulator/";
         try{
             ZipFile outApk= new ZipFile(output.getAbsolutePath()+"/edited_"+templateApks[currentTemplateIndex]);
             ZipParameters params= new ZipParameters();
             params.setCompressionMethod(Zip4jConstants.COMP_DEFLATE);
             params.setCompressionLevel(Zip4jConstants.DEFLATE_LEVEL_NORMAL);
-            outApk.addFile(new File(accumulator+"AndroidManifest.xml"),params);
-            outApk.addFile(new File(accumulator+"classes.dex"),params);
-            outApk.addFile(new File(accumulator+"resources.arsc"),params);
-            outApk.addFolder(new File(accumulator+"res"),params);
-            outApk.addFolder(new File(accumulator+"META-INF"),params);
-            outApk.addFolder(new File(accumulator+"assets"),params);
+            outApk.addFile(new File(ACCUMULATOR_PATH+"AndroidManifest.xml"),params);
+            outApk.addFile(new File(ACCUMULATOR_PATH+"classes.dex"),params);
+            outApk.addFile(new File(ACCUMULATOR_PATH+"resources.arsc"),params);
+            outApk.addFolder(new File(ACCUMULATOR_PATH+"res"),params);
+            outApk.addFolder(new File(ACCUMULATOR_PATH+"META-INF"),params);
+            outApk.addFolder(new File(ACCUMULATOR_PATH+"assets"),params);
 
             appSigner zipSigner= new appSigner();
             zipSigner.setKeymode(ZipSigner.MODE_AUTO_TESTKEY);
-            zipSigner.signZip(output.getAbsolutePath()+"/edited_"+templateApks[currentTemplateIndex],output.getAbsolutePath()+"/signedApk_"+templateApks[currentTemplateIndex]);
+            String signedApkPath=output.getAbsolutePath()+"/signedApk_"+templateApks[currentTemplateIndex];
+            zipSigner.signZip(output.getAbsolutePath()+"/edited_"+templateApks[currentTemplateIndex],signedApkPath);
+            return signedApkPath;
         }
         catch (Exception e){
             Log.e("Compression failed",e.toString());
         }
+        return null;
     }
 
     public static void readManifest(){
@@ -202,6 +209,7 @@ public class pitch {
                 Log.d("maifest",line);
             }
             manifest=stringBuilder.toString();
+            Log.d("asd",manifest);
         }
         catch (Exception e){
             Log.e("InputStream Error",e.toString());

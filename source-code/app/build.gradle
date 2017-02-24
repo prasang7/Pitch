@@ -15,6 +15,7 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            multiDexEnabled true
         }
     }
 }
@@ -36,4 +37,7 @@ dependencies {
     compile 'com.google.code.gson:gson:2.2.4'
     //FASTER IMAGE LOADING
     compile 'com.github.bumptech.glide:glide:3.7.0'
+
+    //GOOGLE DRIVE
+    compile 'com.google.android.gms:play-services-drive:10.2.0'
 }
