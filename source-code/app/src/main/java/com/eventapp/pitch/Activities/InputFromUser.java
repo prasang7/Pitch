@@ -41,6 +41,9 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
+import static com.eventapp.pitch.Utils.pitch.MANIFEST_FILE_PATH;
+import static com.eventapp.pitch.Utils.pitch.currentProjectIndex;
+
 /**
  * Created by prasang on 14/6/16.
  */
@@ -287,51 +290,25 @@ public class InputFromUser extends Activity{
 
 
     class exportDataAsync extends AsyncTask<Void,Void,Void>{
-        String outputPath="";
+        String informationJson="";
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            loadingView.setVisibility(View.VISIBLE);
-            fab_preview.setVisibility(View.GONE);
-            tv_export_status.setText("Exporting...");
+            //PROCESSING DIALOG FOR SAVING THE DATA
         }
 
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            loadingView.setVisibility(View.GONE);
-            fab_preview.setVisibility(View.VISIBLE);
-            tv_export_status.setText("Exported to output folder");
             Intent toUploadToDrive = new Intent(InputFromUser.this,uploadToDrive.class);
-            toUploadToDrive.putExtra("outPath",outputPath);
+            toUploadToDrive.putExtra("informationJson",informationJson);
             startActivity(toUploadToDrive);
         }
 
         @Override
         protected Void doInBackground(Void... voids) {
-            pitch.extractToAccumulator();
-            /*(new Runnable(){
-                @Override
-                public void run() {
-                    tv_export_status.setText("Extracted to accumulator");
-                }
-            }).run();*/
             template information=saveData();
-
-            pitch.manipulate(information);
-            /*(new Runnable(){
-                @Override
-                public void run() {
-                    tv_export_status.setText("Manipulation Complete");
-                }
-            }).run();*/
-            outputPath=pitch.zipAndSign();
-            /*(new Runnable(){
-                @Override
-                public void run() {
-                    tv_export_status.setText("Zipped And Signed");
-                }
-            }).run();*/
+            informationJson = (new Gson().toJson(information));
             return null;
         }
     }
@@ -421,6 +398,11 @@ public class InputFromUser extends Activity{
         openClosed_no.setTypeface(MontReg);
 
         currentProject = pitch.recents.get(pitch.currentProjectIndex);
+        pitch.currentTemplateIndex=currentProject.templateId;
+        pitch.ACCUMULATOR_PATH=pitch.PACKAGE_DIR+currentProject.name+"/accmulator/";
+        pitch.CONFIG_FILE_PATH=pitch.ACCUMULATOR_PATH+"/assets/config.json";
+        pitch.OUTPUT_PATH=pitch.PACKAGE_DIR+currentProject.name+"/output";
+        MANIFEST_FILE_PATH = pitch.ACCUMULATOR_PATH + "AndroidManifest.xml";
     }
     int projectIndex;
     void setBasicData() {

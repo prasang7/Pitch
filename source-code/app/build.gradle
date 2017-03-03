@@ -40,4 +40,10 @@ dependencies {
 
     //GOOGLE DRIVE
     compile 'com.google.android.gms:play-services-drive:10.2.0'
+    compile 'com.google.android.gms:play-services-auth:10.2.0'
+    compile files('libs/google-api-services-drive-v2-rev95-1.15.0-rc-sources.jar')
+    compile files('libs/google-api-client-android-1.15.0-rc.jar')
+    compile 'com.google.api-client:google-api-client:1.22.0'
+    compile 'com.google.oauth-client:google-oauth-client-jetty:1.22.0'
+    compile 'com.google.apis:google-api-services-drive:v3-rev61-1.22.0'
 }
