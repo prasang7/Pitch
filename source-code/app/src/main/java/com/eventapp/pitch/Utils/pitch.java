@@ -3,12 +3,11 @@ package com.eventapp.pitch.Utils;
 import android.content.Context;
 import android.content.res.AssetManager;
 import android.os.Build;
-import android.os.Environment;
+
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Toast;
 
 import com.eventapp.pitch.R;
 import com.eventapp.pitch.project;
@@ -19,15 +18,12 @@ import net.lingala.zip4j.exception.ZipException;
 import net.lingala.zip4j.model.ZipParameters;
 import net.lingala.zip4j.util.Zip4jConstants;
 
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.util.List;
 
@@ -139,7 +135,6 @@ public class pitch {
     }
 
     public static void manipulate(template information){
-        readManifest();
         try{
             FileWriter fout= new FileWriter(CONFIG_FILE_PATH);
             BufferedWriter out = new BufferedWriter(fout);
@@ -152,22 +147,6 @@ public class pitch {
         //readManifest();
     }
 
-    /*static void changeAppname(String name){
-        String string = "<resources>\n" +
-                        "    <string name=\"app_name\">"+name+"</string>\n" +
-                        "</resources>";
-        try{
-            //basicConfig template_after= new basicConfig(textMain.getText().toString(),textSub.getText().toString());
-            FileWriter fout= new FileWriter(CONFIG_FILE_PATH);
-            BufferedWriter out = new BufferedWriter(fout);
-            out.write(information.toJson());
-            out.close();
-        }
-        catch(IOException e){
-            Log.e("Output Stream Failed",e.toString());
-        }
-
-    }*/
 
     public static String zipAndSign(){
         File output= new File(OUTPUT_PATH);
@@ -194,25 +173,5 @@ public class pitch {
             Log.e("Compression failed",e.toString());
         }
         return null;
-    }
-
-    public static void readManifest(){
-        try {
-        FileInputStream in = new FileInputStream(new File(MANIFEST_FILE_PATH));
-        StringBuilder stringBuilder = new StringBuilder();
-        String line;
-        String manifest=null;
-        BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-
-            while ((line=reader.readLine())!=null) {
-                stringBuilder.append(line);
-                Log.d("maifest",line);
-            }
-            manifest=stringBuilder.toString();
-            Log.d("asd",manifest);
-        }
-        catch (Exception e){
-            Log.e("InputStream Error",e.toString());
-        }
     }
 }

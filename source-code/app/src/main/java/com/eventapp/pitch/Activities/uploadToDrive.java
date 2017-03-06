@@ -1,26 +1,46 @@
 package com.eventapp.pitch.Activities;
+import android.os.AsyncTask;
 import android.os.Bundle;
+
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.eventapp.pitch.R;
 import com.eventapp.pitch.Utils.pitch;
+import com.eventapp.pitch.template;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
+
+
+import com.google.api.services.drive.model.Permission;
+
+
 import com.google.android.gms.drive.Drive;
 import com.google.android.gms.drive.DriveApi;
 import com.google.android.gms.drive.DriveContents;
 import com.google.android.gms.drive.DriveFolder;
 import com.google.android.gms.drive.MetadataChangeSet;
+import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
+import com.google.api.client.http.javanet.NetHttpTransport;
+import com.google.api.client.json.jackson2.JacksonFactory;
+
+import com.google.api.services.drive.DriveScopes;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import java.io.File;
 import java.io.FileInputStream;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
+
+
 
 import static com.eventapp.pitch.Utils.pitch.currentProjectIndex;
 import static com.eventapp.pitch.Utils.pitch.recents;
@@ -28,31 +48,43 @@ import static com.eventapp.pitch.Utils.pitch.recents;
 public class uploadToDrive extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
     GoogleApiClient mGoogleApiClient;
     String apkPath="";
+    TextView statusView;
+    ProgressBar pb;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload_to_drive);
-        apkPath=getIntent().getStringExtra("outPath");
-        setClient();
-        Drive.DriveApi.newDriveContents(mGoogleApiClient)
-                .setResultCallback(driveContentsCallback);
-
+        statusView=(TextView)findViewById(R.id.export_status);
+        pb=(ProgressBar)findViewById(R.id.export_progress);
+        String informationJson=getIntent().getStringExtra("informationJson");
+        template information = (new Gson().fromJson(informationJson,new TypeToken<template>(){}.getType()));
+        new manipulate(information).execute();
     }
 
     void setClient(){
         mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .enableAutoManage(this, this)
+                .enableAutoManage(this,this)
                 .addApi(Drive.API)
                 .addScope(Drive.SCOPE_FILE)
+                .addOnConnectionFailedListener(this)
+                .addConnectionCallbacks(new GoogleApiClient.ConnectionCallbacks() {
+                    @Override
+                    public void onConnected(@Nullable Bundle bundle) {
+                        Drive.DriveApi.newDriveContents(mGoogleApiClient).setResultCallback(driveContentsCallback); //SEND DATA TO DRIVE
+                    }
+
+                    @Override
+                    public void onConnectionSuspended(int i) {
+
+                    }
+                })
                 .build();
+
+
     }
     @Override
     public void onConnectionFailed(ConnectionResult result) {
-        // An unresolvable error has occurred and a connection to Google APIs
-        // could not be established. Display an error message, or handle
-        // the failure silently
-
-        // ...
+        Log.d("Error","Could not connect");
     }
 
     final private ResultCallback<DriveApi.DriveContentsResult> driveContentsCallback = new
@@ -65,10 +97,7 @@ public class uploadToDrive extends AppCompatActivity implements GoogleApiClient.
                     }
                     final DriveContents driveContents = result.getDriveContents();
 
-                    // Perform upload off the UI thread.
-                    new Thread() {
-                        @Override
-                        public void run() {
+
                             // write content to DriveContents
                             InputStream in = null;
                             try {
@@ -99,9 +128,9 @@ public class uploadToDrive extends AppCompatActivity implements GoogleApiClient.
                                     .createFile(mGoogleApiClient, changeSet, driveContents)
                                     .setResultCallback(fileCallback);
                         }
-                    }.start();
-                }
-            };
+
+                };
+
     final private ResultCallback<DriveFolder.DriveFileResult> fileCallback = new
             ResultCallback<DriveFolder.DriveFileResult>() {
                 @Override
@@ -110,7 +139,82 @@ public class uploadToDrive extends AppCompatActivity implements GoogleApiClient.
                         Log.d("Error","Error while trying to create the file");
                         return;
                     }
-                    Log.d("Created","Created a file with content: " + result.getDriveFile().getDriveId());
+                    String fieldId= result.getDriveFile().getDriveId().toString();
+                    Log.d("Created","Created a file with content: "+fieldId);
+                    pb.setVisibility(View.GONE);
+                    statusView.setText("Uploaded to Drive :)");
+
                 }
             };
+    private Permission insertPermission(com.google.api.services.drive.Drive service, String fileId) {
+        Permission newPermission = new Permission();
+        newPermission.setType("anyone");
+        newPermission.setRole("reader");
+        try {
+
+            return service.permissions().create(fileId,newPermission).execute();
+        } catch (IOException e) {
+            System.out.println("An error occurred: " + e);
+        }
+        return null;
+    }
+
+    class manipulate extends AsyncTask<Void,Integer,Void>{
+        template information;
+        public manipulate(template informationObject){
+            information=informationObject;
+        }
+
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            publishProgress(0);
+            pitch.extractToAccumulator();
+            publishProgress(1);
+            pitch.manipulate(information);
+            publishProgress(2);
+            apkPath=pitch.zipAndSign();
+            return null;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            statusView.setText("Uploading to Drive...");
+            setClient();
+        }
+
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+            switch (values[0]){
+                case 0:
+                    statusView.setText("Preparing the template...");
+                    break;
+                case  1:
+                    statusView.setText("Changing the fields...");
+                    break;
+                case 2:
+                    statusView.setText("Signing the app...");
+                    break;
+            }
+            super.onProgressUpdate(values);
+        }
+    }
+
+    public com.google.api.services.drive.Drive getDriveServices(){
+        new Thread(){
+            @Override
+            public void run() {
+                super.run();
+            }
+        };
+        GoogleAccountCredential credential = GoogleAccountCredential.usingOAuth2(this, DriveScopes.DRIVE);
+        credential.setSelectedAccountName("");
+        return new com.google.api.services.drive.Drive.Builder( new NetHttpTransport(),new JacksonFactory(), credential).build();
+    }
 }
