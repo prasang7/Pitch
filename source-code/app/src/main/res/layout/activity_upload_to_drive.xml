@@ -23,5 +23,13 @@
         android:layout_above="@id/export_status"
         android:id="@+id/export_progress"/>
 
+    <EditText
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_below="@id/export_status"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/link_to_apk"
+        android:visibility="gone"/>
+
 
 </RelativeLayout>
